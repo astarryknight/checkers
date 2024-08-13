@@ -20,11 +20,21 @@
             font-weight: 300;
             font-style: normal;
         }
+
+        #game {
+            width: 400px;
+            height: 400px;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            grid-gap: 0px;
+            border: 1px solid black;
+        }
     </style>
 </head>
 
 <body>
-    <div id="game" width="600" height="600"></div>
+    <div id="game"></div>
     <script src="main.js"></script>
 </body>
 

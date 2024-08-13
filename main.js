@@ -17,15 +17,19 @@ class Piece {
 //draw board
 for (let i = 0; i < 8; i++) {
     for (let j = 0; j < 8; j++) {
+        tile = document.createElement("div");
+        tile.style.width = "50px";
+        tile.style.height = "50px";
         if ((i + j) % 2 == 0) {
-            ctx.fillStyle = "black";
+            tile.style.backgroundColor = "black";
         } else {
-            ctx.fillStyle = "white";
+            tile.style.backgroundColor = "white";
         }
-        ctx.fillRect(i * 50, j * 50, 50, 50);
+        tile.id = "tile" + i + j;
+        document.getElementById("game").appendChild(tile);
     }
 }
-ctx.strokeRect(0, 0, 50 * 8, 50 * 8);
+
 
 var gameOver = false;
 var gameBoard = [];
