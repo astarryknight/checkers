@@ -18,6 +18,7 @@ class Piece {
 for (let i = 0; i < 8; i++) {
     for (let j = 0; j < 8; j++) {
         tile = document.createElement("div");
+        tile.classList.add("tile");
         tile.style.width = "50px";
         tile.style.height = "50px";
         if ((i + j) % 2 == 0) {
@@ -30,38 +31,40 @@ for (let i = 0; i < 8; i++) {
     }
 }
 
-
-var gameOver = false;
-var gameBoard = [];
+gameBoard = [];
 
 function resetBoard() {
     let e = 0;
     for (let i = 0; i < 8; i++) {
         e++;
-        gameBoard[i] = [];
         let k = 0;
         for (let j = 0; j < 8; j++) {
+            checker = document.createElement("div");
+            checker.style.width = "40px";
+            checker.style.height = "40px";
+            checker.style.borderRadius = "50%";
+            checker.style.zIndex = "1";
             if (i != 3 && i != 4) {
                 if (i < 3) {
-                    c = "black";
+                    checker.style.backgroundColor = "#2e9ce6";
+                    c = "blue";
                 } else if (i > 4) {
-                    c = "white";
+                    checker.style.backgroundColor = "#c41a18";
+                    c = "red";
                 }
                 if (e % 2 == 0) {
                     if (k % 2 == 0) {
-                        gameBoard[i][j] = new Piece(c, false);
-                    } else {
-                        gameBoard[i][j] = 0;
+                        document.getElementById("tile" + i + j).appendChild(checker);
+                        gameBoard.push(new Piece(c, false));
                     }
                 } else if (e % 2 != 0) {
                     if (k % 2 != 0) {
-                        gameBoard[i][j] = new Piece(c, false);
-                    } else {
-                        gameBoard[i][j] = 0;
+                        document.getElementById("tile" + i + j).appendChild(checker);
+                        gameBoard.push(new Piece(c, false));
                     }
+                } else {
+                    gameBoard.push(null);
                 }
-            } else {
-                gameBoard[i][j] = 0;
             }
             k++;
         }
@@ -70,3 +73,13 @@ function resetBoard() {
 }
 
 resetBoard();
+
+function getPossibleMoves(xPos, yPos) {
+    if (gameBoard[xPos][yPos] != null) {
+        checker = gameBoard[xPos][yPos];
+        if (checker.color == "red") {
+
+        }
+    }
+}
+
