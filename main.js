@@ -1,15 +1,7 @@
 class Piece {
-    constructor(xPos, yPos, color, king) {
-        this.xPos_ = xPos;
-        this.yPos_ = yPos;
+    constructor(color, king) {
         this.color_ = color;
         this.king_ = king;
-    }
-    get yPos() {
-        return this.yPos_
-    }
-    get xPos() {
-        return this.xPos_
     }
     get color() {
         return this.color_
@@ -17,53 +9,60 @@ class Piece {
     get king() {
         return this.king_
     }
-    set yPos(yPos) {
-        this.yPos_ = yPos;
-    }
-    set xPos(xPos) {
-        this.xPos_ = xPos;
-    }
     set king(king) {
         this.king_ = king;
     }
 }
 
-function draw() {
-    const canvas = document.getElementById("canvas");
-    if (canvas.getContext) {
-        const ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, canvas.width, canvas.height);//clear canvas
+//draw board
+for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+        if ((i + j) % 2 == 0) {
+            ctx.fillStyle = "black";
+        } else {
+            ctx.fillStyle = "white";
+        }
+        ctx.fillRect(i * 50, j * 50, 50, 50);
     }
 }
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
+ctx.strokeRect(0, 0, 50 * 8, 50 * 8);
 
 var gameOver = false;
+var gameBoard = [];
 
-//main game loop
-function game() {
-
-    if (!gameOver) {
-        window.requestAnimationFrame(loop)
-    } else {
-        alert("Game Over!");
-        location.reload();
+function resetBoard() {
+    let e = 0;
+    for (let i = 0; i < 8; i++) {
+        e++;
+        gameBoard[i] = [];
+        let k = 0;
+        for (let j = 0; j < 8; j++) {
+            if (i != 3 && i != 4) {
+                if (i < 3) {
+                    c = "black";
+                } else if (i > 4) {
+                    c = "white";
+                }
+                if (e % 2 == 0) {
+                    if (k % 2 == 0) {
+                        gameBoard[i][j] = new Piece(c, false);
+                    } else {
+                        gameBoard[i][j] = 0;
+                    }
+                } else if (e % 2 != 0) {
+                    if (k % 2 != 0) {
+                        gameBoard[i][j] = new Piece(c, false);
+                    } else {
+                        gameBoard[i][j] = 0;
+                    }
+                }
+            } else {
+                gameBoard[i][j] = 0;
+            }
+            k++;
+        }
     }
+    console.log(gameBoard)
 }
 
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-//handling keypresses
-addEventListener("keydown", (event) => {
-    if (event.isComposing) {
-        return;
-    }
-    if (event.key == " ") {
-        bird.yVel = 11
-    }
-});
-
-// window.requestAnimationFrame(loop)
+resetBoard();
