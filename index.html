@@ -34,12 +34,17 @@
             grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(8, 1fr);
             grid-gap: 0px;
-            border: 1px solid black;
+            border: 1px solid gray;
+        }
+
+        h1 {
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 
 <body>
+    <h1><span id="turn" style="color:#c41a18">Red's</span> Turn</h1>
     <div id="game"></div>
     <script src="main.js"></script>
 </body>

@@ -79,26 +79,22 @@ function resetBoard() {
                 }
                 if (e % 2 == 0) {
                     if (k % 2 == 0) {
-                        // document.getElementById("tile" + j + i).appendChild(checker);
-                        // gameBoard[i][j] = (new Piece(c, false));
-                        if (c == "blue") {
-                            document.getElementById("tile" + j + i).appendChild(checker);
-                            gameBoard[i][j] = (new Piece(c, false));
-                        } else {
-                            gameBoard[i][j] = null;
-                        }
+                        document.getElementById("tile" + j + i).appendChild(checker);
+                        gameBoard[i][j] = (new Piece(c, false));
+                        // if (c == "blue") {
+                        //     document.getElementById("tile" + j + i).appendChild(checker);
+                        //     gameBoard[i][j] = (new Piece(c, false));
+                        // } else {
+                        //     gameBoard[i][j] = null;
+                        // }
                     }
                     else {
                         gameBoard[i][j] = null;
                     }
                 } else if (e % 2 != 0) {
                     if (k % 2 != 0) {
-                        if (c == "blue") {
-                            document.getElementById("tile" + j + i).appendChild(checker);
-                            gameBoard[i][j] = (new Piece(c, false));
-                        } else {
-                            gameBoard[i][j] = null;
-                        }
+                        document.getElementById("tile" + j + i).appendChild(checker);
+                        gameBoard[i][j] = (new Piece(c, false));
                     }
                     else {
                         gameBoard[i][j] = null;
@@ -117,6 +113,8 @@ resetBoard();
 
 var prevTile = null;
 
+var turn = "red";
+
 function getPossibleMoves(xPos, yPos) {
     if (document.getElementById("tile" + xPos + yPos).style.backgroundColor == "green") {
         moveTile(prevTile.id[4], prevTile.id[5], document.getElementById("tile" + xPos + yPos));
@@ -125,7 +123,7 @@ function getPossibleMoves(xPos, yPos) {
     prevTile = document.getElementById("tile" + xPos + yPos);
     resetBoardColors();
     if (gameBoard[yPos][xPos] != null) {
-        if (gameBoard[yPos][xPos].color == "red") {
+        if (gameBoard[yPos][xPos].color == "red" && turn == "red") {
             if (xPos - 1 >= 0 && yPos - 1 >= 0) {
                 if (gameBoard[yPos - 1][xPos - 1] == null) {
                     document.getElementById("tile" + (xPos - 1) + (yPos - 1)).style.backgroundColor = "green";
@@ -143,7 +141,7 @@ function getPossibleMoves(xPos, yPos) {
                 }
             }
         }
-        if (gameBoard[yPos][xPos].color == "blue") {
+        if (gameBoard[yPos][xPos].color == "blue" && turn == "blue") {
             if (xPos - 1 >= 0 && yPos + 1 <= 7) {
                 if (gameBoard[yPos + 1][xPos - 1] == null) {
                     document.getElementById("tile" + (xPos - 1) + (yPos + 1)).style.backgroundColor = "green";
@@ -163,7 +161,7 @@ function getPossibleMoves(xPos, yPos) {
         }
         if (gameBoard[yPos][xPos].king) {
 
-            if (gameBoard[yPos][xPos].color == "red") {
+            if (gameBoard[yPos][xPos].color == "red" && turn == "red") {
                 if (xPos - 1 >= 0 && yPos + 1 <= 7) {
                     if (gameBoard[yPos + 1][xPos - 1] == null) {
                         document.getElementById("tile" + (xPos - 1) + (yPos + 1)).style.backgroundColor = "green";
@@ -181,7 +179,7 @@ function getPossibleMoves(xPos, yPos) {
                     }
                 }
             }
-            if (gameBoard[yPos][xPos].color == "blue") {
+            if (gameBoard[yPos][xPos].color == "blue" && turn == "blue") {
                 if (xPos - 1 >= 0 && yPos - 1 >= 0) {
                     if (gameBoard[yPos - 1][xPos - 1] == null) {
                         document.getElementById("tile" + (xPos - 1) + (yPos - 1)).style.backgroundColor = "green";
@@ -222,6 +220,16 @@ function moveTile(xPos, yPos, tile) {
     if (tile.id[5] == 0 || tile.id[5] == 7) {
         gameBoard[tile.id[5]][tile.id[4]].king = true;
         checker.style.border = "5px solid gold";
+    }
+
+    turn = (turn == "red" ? "blue" : "red");
+    var t = document.getElementById("turn")
+    if (turn == "red") {
+        t.textContent = "Red's"
+        t.style.color = "#c41a18"
+    } else {
+        t.textContent = "Blue's"
+        t.style.color = "#2e9ce6"
     }
 }
 
