@@ -29,7 +29,7 @@ function drawBoard() {
             } else {
                 tile.style.backgroundColor = "white";
             }
-            tile.id = "tile" + i + j;
+            tile.id = "tile" + j + i;
             tile.addEventListener("click", function () {
                 getPossibleMoves(j, i);
             });
@@ -84,7 +84,7 @@ function resetBoard() {
                         // }
                         // gameBoard[i][j] = (new Piece(c, false));
                         if (c == "red") {
-                            document.getElementById("tile" + i + j).appendChild(checker);
+                            document.getElementById("tile" + j + i).appendChild(checker);
                             gameBoard[i][j] = (new Piece(c, false));
                         } else {
                             gameBoard[i][j] = null;
@@ -96,7 +96,7 @@ function resetBoard() {
                 } else if (e % 2 != 0) {
                     if (k % 2 != 0) {
                         if (c == "red") {
-                            document.getElementById("tile" + i + j).appendChild(checker);
+                            document.getElementById("tile" + j + i).appendChild(checker);
                             gameBoard[i][j] = (new Piece(c, false));
                         } else {
                             gameBoard[i][j] = null;
@@ -126,82 +126,37 @@ function getPossibleMoves(xPos, yPos) {
     }
     prevTile = document.getElementById("tile" + xPos + yPos);
     resetBoardColors();
-    if (gameBoard[xPos][yPos] != null) {
-        checker = gameBoard[xPos][yPos];
-        if (checker.color == "red") { //moving upwards
+    if (gameBoard[yPos][xPos] != null) {
+        if (gameBoard[yPos][xPos].color == "red") {
             if (xPos - 1 >= 0 && yPos - 1 >= 0) {
-                if (gameBoard[xPos - 1][yPos - 1] == null) {
+                if (gameBoard[yPos - 1][xPos - 1] == null) {
                     document.getElementById("tile" + (xPos - 1) + (yPos - 1)).style.backgroundColor = "green";
-                } else if (gameBoard[xPos - 1][yPos - 1].color != checker.color) {
-                    if (xPos - 2 >= 0 && yPos - 2 >= 0) {
-                        if (gameBoard[xPos - 2][yPos - 2] == null) {
-                            document.getElementById("tile" + (xPos - 2) + (yPos - 2)).style.backgroundColor = "green";
-                        }
-                    }
                 }
             }
-            if (xPos - 1 >= 0 && yPos + 1 <= 7) {
-                if (gameBoard[xPos - 1][yPos + 1] == null) {
-                    document.getElementById("tile" + (xPos - 1) + (yPos + 1)).style.backgroundColor = "green";
-                } else if (gameBoard[xPos - 1][yPos + 1].color != checker.color) {
-                    if (xPos - 2 >= 0 && yPos + 2 <= 7) {
-                        if (gameBoard[xPos - 2][yPos + 2] == null) {
-                            document.getElementById("tile" + (xPos - 2) + (yPos + 2)).style.backgroundColor = "green";
-                        }
-                    }
-                }
-            }
-        } else if (checker.color == "blue") { //moving downards
-            if (xPos + 1 <= 7 && yPos - 1 >= 0) {
-                if (gameBoard[xPos + 1][yPos - 1] == null) {
+            if (xPos + 1 >= 0 && yPos - 1 >= 0) {
+                if (gameBoard[yPos - 1][xPos + 1] == null) {
                     document.getElementById("tile" + (xPos + 1) + (yPos - 1)).style.backgroundColor = "green";
-                } else if (gameBoard[xPos + 1][yPos - 1].color != checker.color) {
-                    if (xPos + 2 <= 7 && yPos - 2 >= 0) {
-                        if (gameBoard[xPos + 2][yPos - 2] == null) {
-                            document.getElementById("tile" + (xPos + 2) + (yPos - 2)).style.backgroundColor = "green";
-                        }
-                    }
-                }
-            }
-            if (xPos + 1 <= 7 && yPos + 1 <= 7) {
-                if (gameBoard[xPos + 1][yPos + 1] == null) {
-                    document.getElementById("tile" + (xPos + 1) + (yPos + 1)).style.backgroundColor = "green";
-                } else if (gameBoard[xPos + 1][yPos + 1].color != checker.color) {
-                    if (xPos + 2 <= 7 && yPos + 2 <= 7) {
-                        if (gameBoard[xPos + 2][yPos + 2] == null) {
-                            document.getElementById("tile" + (xPos + 2) + (yPos + 2)).style.backgroundColor = "green";
-                        }
-                    }
                 }
             }
         }
-        if (checker.king) {
-            if (checker.color == "red" && yPos + 1 <= 7) {
-                if (xPos - 1 <= 0) {
-                    if (gameBoard[xPos - 1][yPos + 1] == null) {
-                        document.getElementById("tile" + (xPos - 1) + (yPos + 1)).style.backgroundColor = "green";
-                    } else if (gameBoard[xPos - 1][yPos + 1].color != checker.color) {
-                        if (xPos - 2 >= 0 && yPos + 2 <= 7) {
-                            if (gameBoard[xPos - 2][yPos + 2] == null) {
-                                document.getElementById("tile" + (xPos - 2) + (yPos + 2)).style.backgroundColor = "green";
-                            }
-                        }
-                    }
-                }
-                if (xPos + 1 <= 7) {
-                    if (gameBoard[xPos + 1][yPos + 1] == null) {
-                        document.getElementById("tile" + (xPos + 1) + (yPos + 1)).style.backgroundColor = "green";
-                    } else if (gameBoard[xPos + 1][yPos + 1].color != checker.color) {
-                        if (xPos + 2 <= 7 && yPos + 2 <= 7) {
-                            if (gameBoard[xPos + 2][yPos + 2] == null) {
-                                document.getElementById("tile" + (xPos + 2) + (yPos + 2)).style.backgroundColor = "green";
-                            }
-                        }
-                    }
-                }
+        if (gameBoard[yPos][xPos].color == "blue") {
+            if (xPos - 1 >= 0 && yPos > 1) {
+                // if () {
+
+                // }
             }
+            if (xPos + 1 >= 0 && yPos > 1) {
+                // if () {
+
+                // }
+            }
+        }
+        if (gameBoard[yPos][xPos].king) {
+            //if its a king do something
         }
     }
+
+
 }
 
 function moveTile(xPos, yPos, tile) {
@@ -213,13 +168,13 @@ function moveTile(xPos, yPos, tile) {
     checker = document.getElementById("tile" + xPos + yPos).children[0];
     console.log(document.getElementById("tile" + xPos + yPos).children)
     tile.appendChild(checker);
-    gameBoard[xPos][yPos] = null;
-    gameBoard[tile.id[4]][tile.id[5]] = new Piece((checker.style.backgroundColor == "rgb(196, 26, 24)" ? "red" : "blue"), false);
+    gameBoard[yPos][xPos] = null;
+    gameBoard[tile.id[5]][tile.id[4]] = new Piece((checker.style.backgroundColor == "rgb(196, 26, 24)" ? "red" : "blue"), false);
     console.log(checker.style.backgroundColor);
     console.log(gameBoard)
 
-    if (tile.id[4] == 0 || tile.id[4] == 7) {
-        gameBoard[tile.id[4]][tile.id[5]].king = true;
+    if (tile.id[5] == 0 || tile.id[5] == 7) {
+        gameBoard[tile.id[5]][tile.id[4]].king = true;
         checker.style.border = "5px solid gold";
     }
 }
