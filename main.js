@@ -33,10 +33,6 @@ function drawBoard() {
             tile.addEventListener("click", function () {
                 getPossibleMoves(j, i);
             });
-            tile.addEventListener("contextmenu", function (event) {
-                event.preventDefault();
-                console.log("i:", i, "j:", j);
-            });
             document.getElementById("game").appendChild(tile);
         }
     }
@@ -68,6 +64,7 @@ function resetBoard() {
             checker.style.width = "40px";
             checker.style.height = "40px";
             checker.style.borderRadius = "50%";
+            checker.style.boxShadow = "0px 1px 0px rgba(127, 127, 127, 0.75)";
             checker.style.zIndex = "1";
             if (i != 3 && i != 4) {
                 if (i < 3) {
