@@ -25,23 +25,30 @@
         }
 
         body {
-            perspective: 400px;
+            perspective: 500px;
             perspective-origin: 50% 100%;
+            overflow-y: hidden;
         }
 
         .tile {
             display: flex;
             justify-content: center;
             align-items: center;
-            transform-style: flat;
+            transform-style: preserve-3d;
         }
 
         .tile div {
             box-sizing: border-box;
             text-align: center;
             display: block;
-            transition: transform 1s;
-            transform: rotateX(180deg);
+            transition: opacity 1s 0.4s, transform 0.8s;
+            opacity: 0;
+            transform: rotateX(0deg) translateZ(1000px);
+        }
+
+        body.loaded .tile div {
+            opacity: 1;
+            transform: translateZ(4px);
         }
 
         .tile:not(:empty):hover {
@@ -56,12 +63,37 @@
             grid-template-rows: repeat(8, 1fr);
             grid-gap: 0px;
             border: 1px solid gray;
+            transition: transform 0.9s;
             transform-style: preserve-3d;
-            transform: rotateX(20deg);
+            transform: rotateX(100deg) translateZ(-600px);
+        }
+
+        body.loaded #game {
+            transform: rotateX(20deg) translateZ(0px);
         }
 
         h1 {
             text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.5s 0.5s;
+            opacity: 0;
+        }
+
+        body.loaded h1 {
+            opacity: 1;
+        }
+
+        @keyframes flip3d {
+            0% {
+                transform: translateZ(4px) rotateX(200deg);
+            }
+
+            50% {
+                transform: translateZ(42px) rotateX(250deg);
+            }
+
+            100% {
+                transform: translateZ(4px) rotateX(360deg);
+            }
         }
     </style>
 </head>

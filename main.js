@@ -222,9 +222,14 @@ function moveTile(xPos, yPos, tile) {
         checker.textContent = '\uD83D\uDC51';
         checker.style.lineHeight = '26px';
         checker.style.textShadow = '0 0 6px rgb(64, 64, 64), 0 0 0px rgb(0, 0, 0)';
-        requestAnimationFrame(() => {
-            checker.style.transform = 'rotateX(360deg)';
-        });
+        checker.style.transform = 'rotateX(180deg)';
+        // todo: only do animation when it changes, not every move!
+        if (!checker.style.animation) {
+            requestAnimationFrame(() => {
+                //checker.style.transform = 'rotateX(360deg)';
+                checker.style.animation = 'flip3d 0.6s forwards';
+            });
+        }
     }
 
     turn = (turn == "red" ? "blue" : "red");
@@ -238,3 +243,6 @@ function moveTile(xPos, yPos, tile) {
     }
 }
 
+setTimeout(function () {
+    document.body.classList.add('loaded');
+}, 20);
