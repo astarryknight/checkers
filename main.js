@@ -81,7 +81,7 @@ function resetBoard() {
                     if (k % 2 == 0) {
                         // document.getElementById("tile" + j + i).appendChild(checker);
                         // gameBoard[i][j] = (new Piece(c, false));
-                        if (c == "red") {
+                        if (c == "blue") {
                             document.getElementById("tile" + j + i).appendChild(checker);
                             gameBoard[i][j] = (new Piece(c, false));
                         } else {
@@ -93,7 +93,7 @@ function resetBoard() {
                     }
                 } else if (e % 2 != 0) {
                     if (k % 2 != 0) {
-                        if (c == "red") {
+                        if (c == "blue") {
                             document.getElementById("tile" + j + i).appendChild(checker);
                             gameBoard[i][j] = (new Piece(c, false));
                         } else {
@@ -152,7 +152,7 @@ function getPossibleMoves(xPos, yPos) {
                     document.getElementById("tile" + (xPos - 2) + (yPos + 2)).style.backgroundColor = "green";
                 }
             }
-            if (xPos + 1 >= 0 && yPos + 1 <= 7) {
+            if (xPos + 1 <= 7 && yPos + 1 <= 7) {
                 if (gameBoard[yPos + 1][xPos + 1] == null) {
                     document.getElementById("tile" + (xPos + 1) + (yPos + 1)).style.backgroundColor = "green";
                 }
