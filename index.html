@@ -24,10 +24,28 @@
             font-style: normal;
         }
 
+        body {
+            perspective: 400px;
+            perspective-origin: 50% 100%;
+        }
+
         .tile {
             display: flex;
             justify-content: center;
             align-items: center;
+            transform-style: flat;
+        }
+
+        .tile div {
+            box-sizing: border-box;
+            text-align: center;
+            display: block;
+            transition: transform 1s;
+            transform: rotateX(180deg);
+        }
+
+        .tile:not(:empty):hover {
+            background-color: rgb(160, 160, 160) !important;
         }
 
         #game {
@@ -38,6 +56,8 @@
             grid-template-rows: repeat(8, 1fr);
             grid-gap: 0px;
             border: 1px solid gray;
+            transform-style: preserve-3d;
+            transform: rotateX(20deg);
         }
 
         h1 {

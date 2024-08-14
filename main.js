@@ -69,9 +69,11 @@ function resetBoard() {
             if (i != 3 && i != 4) {
                 if (i < 3) {
                     checker.style.backgroundColor = "#2e9ce6";
+                    checker.style.boxShadow = "0px 2px 0px rgb(0, 0, 0, 0.5), 0px 2px 0px #2e9ce6";
                     c = "blue";
                 } else if (i > 4) {
                     checker.style.backgroundColor = "#c41a18";
+                    checker.style.boxShadow = "0px 2px 0px rgb(0, 0, 0, 0.5), 0px 2px 0px #c41a18";
                     c = "red";
                 }
                 if (e % 2 == 0) {
@@ -133,7 +135,7 @@ function getPossibleMoves(xPos, yPos) {
                 if (gameBoard[yPos - 1][xPos + 1] == null) {
                     document.getElementById("tile" + (xPos + 1) + (yPos - 1)).style.backgroundColor = "green";
                 }
-                else if ((xPos + 2 >= 0 && yPos - 2 >= 0) && gameBoard[yPos - 1][xPos + 1].color == "blue" && gameBoard[yPos - 2][xPos + 2] == null) {
+                else if ((xPos + 2 <= 7 && yPos - 2 >= 0) && gameBoard[yPos - 1][xPos + 1].color == "blue" && gameBoard[yPos - 2][xPos + 2] == null) {
                     document.getElementById("tile" + (xPos + 2) + (yPos - 2)).style.backgroundColor = "green";
                 }
             }
@@ -143,7 +145,7 @@ function getPossibleMoves(xPos, yPos) {
                 if (gameBoard[yPos + 1][xPos - 1] == null) {
                     document.getElementById("tile" + (xPos - 1) + (yPos + 1)).style.backgroundColor = "green";
                 }
-                else if ((xPos - 2 >= 0 && yPos + 2 >= 0) && gameBoard[yPos + 1][xPos - 1].color == "red" && gameBoard[yPos + 2][xPos - 2] == null) {
+                else if ((xPos - 2 >= 0 && yPos + 2 <= 7) && gameBoard[yPos + 1][xPos - 1].color == "red" && gameBoard[yPos + 2][xPos - 2] == null) {
                     document.getElementById("tile" + (xPos - 2) + (yPos + 2)).style.backgroundColor = "green";
                 }
             }
@@ -151,7 +153,7 @@ function getPossibleMoves(xPos, yPos) {
                 if (gameBoard[yPos + 1][xPos + 1] == null) {
                     document.getElementById("tile" + (xPos + 1) + (yPos + 1)).style.backgroundColor = "green";
                 }
-                else if ((xPos + 2 >= 0 && yPos + 2 >= 0) && gameBoard[yPos + 1][xPos + 1].color == "red" && gameBoard[yPos + 2][xPos + 2] == null) {
+                else if ((xPos + 2 <= 7 && yPos + 2 <= 7) && gameBoard[yPos + 1][xPos + 1].color == "red" && gameBoard[yPos + 2][xPos + 2] == null) {
                     document.getElementById("tile" + (xPos + 2) + (yPos + 2)).style.backgroundColor = "green";
                 }
             }
@@ -171,7 +173,7 @@ function getPossibleMoves(xPos, yPos) {
                     if (gameBoard[yPos + 1][xPos + 1] == null) {
                         document.getElementById("tile" + (xPos + 1) + (yPos + 1)).style.backgroundColor = "green";
                     }
-                    else if ((xPos + 2 >= 0 && yPos + 2 >= 0) && gameBoard[yPos + 1][xPos + 1].color == "blue" && gameBoard[yPos + 2][xPos + 2] == null) {
+                    else if ((xPos + 2 <= 7 && yPos + 2 >= 0) && gameBoard[yPos + 1][xPos + 1].color == "blue" && gameBoard[yPos + 2][xPos + 2] == null) {
                         document.getElementById("tile" + (xPos + 2) + (yPos + 2)).style.backgroundColor = "green";
                     }
                 }
@@ -189,7 +191,7 @@ function getPossibleMoves(xPos, yPos) {
                     if (gameBoard[yPos - 1][xPos + 1] == null) {
                         document.getElementById("tile" + (xPos + 1) + (yPos - 1)).style.backgroundColor = "green";
                     }
-                    else if ((xPos + 2 >= 0 && yPos - 2 >= 0) && gameBoard[yPos - 1][xPos + 1].color == "red" && gameBoard[yPos - 2][xPos + 2] == null) {
+                    else if ((xPos + 2 <= 7 && yPos - 2 >= 0) && gameBoard[yPos - 1][xPos + 1].color == "red" && gameBoard[yPos - 2][xPos + 2] == null) {
                         document.getElementById("tile" + (xPos + 2) + (yPos - 2)).style.backgroundColor = "green";
                     }
                 }
@@ -216,7 +218,13 @@ function moveTile(xPos, yPos, tile) {
 
     if (tile.id[5] == 0 || tile.id[5] == 7) {
         gameBoard[tile.id[5]][tile.id[4]].king = true;
-        checker.style.border = "5px solid gold";
+        checker.style.border = "5px outset gold";
+        checker.textContent = '\uD83D\uDC51';
+        checker.style.lineHeight = '26px';
+        checker.style.textShadow = '0 0 6px rgb(64, 64, 64), 0 0 0px rgb(0, 0, 0)';
+        requestAnimationFrame(() => {
+            checker.style.transform = 'rotateX(360deg)';
+        });
     }
 
     turn = (turn == "red" ? "blue" : "red");
