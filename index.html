@@ -41,7 +41,7 @@
             box-sizing: border-box;
             text-align: center;
             display: block;
-            transition: opacity 1s 0.4s, transform 0.8s;
+            transition: opacity 1s 0.4s, transform 0.8s, rotate 0.4s;
             opacity: 0;
             transform: rotateX(0deg) translateZ(1000px);
             user-select: none;
@@ -71,12 +71,26 @@
 
         body.loaded #game {
             transform: rotateX(20deg) translateZ(0px);
+            transition: transform ease-in-out 0.4s;
+        }
+
+        body.loaded.flip #game {
+            transform: rotateX(20deg) rotateZ(180deg) translateZ(0px);
+        }
+
+        body.loaded.flip .tile div {
+            rotate: 180deg;
         }
 
         h1 {
             text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
             transition: opacity 0.5s 0.5s;
             opacity: 0;
+            font-weight: normal;
+        }
+
+        h1 #turn {
+            font-weight: bold;
         }
 
         body.loaded h1 {

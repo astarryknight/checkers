@@ -31,7 +31,9 @@ function drawBoard() {
             }
             tile.id = "tile" + j + i;
             tile.addEventListener("click", function () {
-                getPossibleMoves(j, i);
+                if (!winner) {
+                    getPossibleMoves(j, i);
+                }
             });
             document.getElementById("game").appendChild(tile);
         }
@@ -69,11 +71,11 @@ function resetBoard() {
             if (i != 3 && i != 4) {
                 if (i < 3) {
                     checker.style.backgroundColor = "#2e9ce6";
-                    checker.style.boxShadow = "0px 2px 0px rgb(0, 0, 0, 0.5), 0px 2px 0px #2e9ce6";
+                    checker.style.boxShadow = "0px 3px 0px rgb(0, 0, 0, 0.5), 0px 3px 0px #2e9ce6";
                     c = "blue";
                 } else if (i > 4) {
                     checker.style.backgroundColor = "#c41a18";
-                    checker.style.boxShadow = "0px 2px 0px rgb(0, 0, 0, 0.5), 0px 2px 0px #c41a18";
+                    checker.style.boxShadow = "0px 3px 0px rgb(0, 0, 0, 0.5), 0px 3px 0px #c41a18";
                     c = "red";
                 }
                 if (e % 2 == 0) {
@@ -113,6 +115,7 @@ resetBoard();
 var prevTile = null;
 
 var turn = "red";
+var winner = null;
 
 function getPossibleMoves(xPos, yPos) {
     if (document.getElementById("tile" + xPos + yPos).style.backgroundColor == "green") {
@@ -206,6 +209,22 @@ function moveTile(xPos, yPos, tile) {
     if (Math.abs(xPos - tile.id[4]) == 2) {
         gameBoard[(parseInt(yPos) + parseInt(tile.id[5])) / 2][(parseInt(xPos) + parseInt(tile.id[4])) / 2] = null;
         document.getElementById("tile" + ((parseInt(xPos) + parseInt(tile.id[4])) / 2) + ((parseInt(yPos) + parseInt(tile.id[5])) / 2)).children[0].remove();
+
+        var won = true;
+        for (var col of gameBoard) {
+            for (var piece of col) {
+                if (piece && piece.color != turn) {
+                    won = false;
+                    break;
+                }
+            }
+            if (!won) {
+                break;
+            }
+        }
+        if (won) {
+            winner = turn;
+        }
     }
 
     checker = document.getElementById("tile" + xPos + yPos).children[0];
@@ -216,30 +235,44 @@ function moveTile(xPos, yPos, tile) {
     console.log(checker.style.backgroundColor);
     console.log(gameBoard)
 
-    if (tile.id[5] == 0 || tile.id[5] == 7) {
+    if ((tile.id[5] == 0 || tile.id[5] == 7) && !gameBoard[tile.id[5]][tile.id[4]].king) {
         gameBoard[tile.id[5]][tile.id[4]].king = true;
         checker.style.border = "5px outset gold";
         checker.textContent = '\uD83D\uDC51';
         checker.style.lineHeight = '26px';
         checker.style.textShadow = '0 0 6px rgb(64, 64, 64), 0 0 0px rgb(0, 0, 0)';
-        checker.style.transform = 'rotateX(180deg)';
-        // todo: only do animation when it changes, not every move!
-        if (!checker.style.animation) {
-            requestAnimationFrame(() => {
-                //checker.style.transform = 'rotateX(360deg)';
-                checker.style.animation = 'flip3d 0.6s forwards';
-            });
-        }
+        requestAnimationFrame(() => {
+            checker.style.animation = 'flip3d 0.6s forwards';
+            setTimeout(function () {
+                checker.style.animation = null;
+            }, 600);
+        });
     }
 
     turn = (turn == "red" ? "blue" : "red");
     var t = document.getElementById("turn")
-    if (turn == "red") {
-        t.textContent = "Red's"
-        t.style.color = "#c41a18"
+    if (winner) {
+        resetBoardColors();
+        var h1 = t.parentElement;
+        h1.innerHTML = '<span id="turn"></span>';
+        t = h1.children[0];
+        if (winner == "red") {
+            t.textContent = "Red won!"
+            t.style.color = "#c41a18"
+        } else {
+            t.textContent = "Blue won!"
+            t.style.color = "#2e9ce6"
+        }
     } else {
-        t.textContent = "Blue's"
-        t.style.color = "#2e9ce6"
+        if (turn == "red") {
+            t.textContent = "Red's"
+            t.style.color = "#c41a18"
+            document.body.classList.remove('flip');
+        } else {
+            t.textContent = "Blue's"
+            t.style.color = "#2e9ce6"
+            document.body.classList.add('flip');
+        }
     }
 }
 
